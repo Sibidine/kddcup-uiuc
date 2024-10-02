@@ -8,11 +8,11 @@ import string
 import unicodedata
 
 def remove_noise_simple(src_name):
-    name = src_name.decode('utf-8')
+    # name = src_name.decode('utf-8')
     return unicodedata.normalize('NFKD', name).encode('ascii','ignore')
 
 def remove_noise(src):
-    src = src.decode('utf-8')
+    # src = src.decode('utf-8')
 
     pattern = re.compile('è\·ˉ |È\·ˉ |è\·ˉ|È\·ˉ', re.MULTILINE)
     s = pattern.sub('', src)
@@ -133,13 +133,16 @@ def generate_new_author_names():
             f = open(author_fn, 'w')
             for line in author_file:
                 tokens = line.split(',')
+                for token in tokens:
+                  if isinstance(token, (bytes, bytearray)):
+                        token = token.decode()
                 if len(tokens) > 1:
                     if tokens[1] in done:
                         tokens[1] = done[tokens[1]]
                     else:
                         clean = remove_noise(tokens[1])
-                        done[tokens[1]] = clean
-                        tokens[1] = clean
+                        done[tokens[1]] = clean.decode()
+                        tokens[1] = clean.decode()
                     f.write(','.join(tokens))
                 else:
                     f.write(line)
@@ -150,13 +153,16 @@ def generate_new_author_names():
             f = open(paper_author_fn, 'w')
             for line in pa_file:
                 tokens = line.split(',')
+                for token in tokens:
+                  if isinstance(token, (bytes, bytearray)):
+                        token = token.decode()
                 if len(tokens) > 2:
                     if tokens[2] in done:
                         tokens[2] = done[tokens[2]]
                     else:
                         clean = remove_noise(tokens[2])
-                        done[tokens[2]] = clean
-                        tokens[2] = clean
+                        done[tokens[2]] = clean.decode()
+                        tokens[2] = clean.decode()
                     f.write(','.join(tokens))
                 else:
                     f.write(line)
