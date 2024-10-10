@@ -1,6 +1,6 @@
 #-*- coding: UTF-8 -*
 from custom_setting import *
-from io import *
+from inpout import *
 from recall_related import *
 from precision_related import *
 import pickle
