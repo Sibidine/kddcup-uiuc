@@ -65,7 +65,7 @@ class Name:
         # In case of M.I. Jordan
         name = name.replace('?', '').lower().strip()
         # replace M.I. to M I.
-        name = re.sub('([a-zA-Z]+)(\.)([a-zA-Z]+)', '\g<1> \g<3>', name)
+        name = re.sub(r'([a-zA-Z]+)(\.)([a-zA-Z]+)', r'\g<1> \g<3>', name)
         # replace M I. to M I
 
         # remove all  non [a-zA-Z] characters
